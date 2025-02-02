@@ -1,3 +1,5 @@
+let iter = 1
+
 class Ball {
     constructor(track, radius, speed, freq, color) {
         this.track = track
@@ -15,9 +17,15 @@ class Ball {
         let res = this.track.getPosition(this.offset)
         this.center = {x: res.x, y: res.y}
         if (res.round != this.round) {
+            if (iter<N) {
+                animatedBalls.push(balls[iter])
+                iter++
+            }
             playSound(this.freq)
             this.round = res.round
         }
+
+        
     }
 
     draw(ctx) {

@@ -6,7 +6,7 @@ cv.width = canvaSize
 let center = {x: canvaSize/2, y: canvaSize/2}
 const radius = 50
 const trackStep = 30;
-const ballStep = -.0001
+const ballStep = -.0005
 let ballRadius = 10
 let speed = .01
 
@@ -24,10 +24,12 @@ const notes = [
 ]
 
 const colors = [
-    "#FDF8E2", "#FFDDD3", "#F3BFB3", "#5EA9BE", "#9ACDE0", "#CBE1EF",
+    "#6B9797", "#FFDDD3", "#F3BFB3", "#5EA9BE", "#9ACDE0", "#CBE1EF",
     "#87CEEB", "#9CA39C", "#FFFFBF", "#FBFBF8", "#D3EEDD", "#E7DBCC",
-    "#C8A2C8", "#6B9797"
+    "#C8A2C8", "#FDF8E2"
 ]
+
+shuffleArray(notes)
 
 let ctx = cv.getContext("2d")
 
@@ -42,6 +44,7 @@ for (let i = 0; i<N; i++) {
     let ball = new Ball(track, ballRadius, ballSpeed, ballSoundFreq, ballColor)
     balls.push(ball)
 }
+animatedBalls.push(balls[0])
 tracks.forEach((track) => track.draw(ctx))
 
 document.body.addEventListener("click", function () {
@@ -53,15 +56,16 @@ document.body.addEventListener("click", function () {
         function animate() {
             ctx.clearRect(0, 0, canvaSize, canvaSize)
             tracks.forEach((track) => track.draw(ctx))
-            balls.forEach((ball) => ball.move())
-            balls.forEach((ball) => ball.draw(ctx))
+            animatedBalls.forEach((ball) => ball.move())
+            animatedBalls.forEach((ball) => ball.draw(ctx))
             requestAnimationFrame(animate)
         }    
     }
-    
-    
-    
-    
 })
 
-
+function shuffleArray(array) {
+    for (let i = array.length - 1; i >= 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
